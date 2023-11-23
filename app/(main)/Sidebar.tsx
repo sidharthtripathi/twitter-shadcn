@@ -18,6 +18,7 @@ import {
   HomeIcon,
   Mail,
   Search,
+  Settings2,
   User,
 } from "lucide-react";
 import React from "react";
@@ -26,35 +27,53 @@ interface SidebarType extends React.HTMLAttributes<HTMLDivElement> {}
 function Sidebar({ className, style, ...props }: SidebarType) {
   return (
     <div className={cn(className)}>
-      <div className="hidden justify-center sm:flex md:justify-start">
-        <CatIcon size={32} />
+      <div className="flex w-full justify-around sm:block ">
+        <div className="hidden  justify-center space-x-2 p-2 sm:flex md:justify-start">
+          <CatIcon size={32} />
+        </div>
+        <div className="flex  justify-center space-x-2 p-2 md:justify-start">
+          <HomeIcon />
+          <h3 className="hidden md:block">Home</h3>
+        </div>
+        <div className="flex  justify-center space-x-2 p-2 md:justify-start   ">
+          <Search />
+          <h3 className="hidden md:block">Search</h3>
+        </div>
+        <div className="flex  justify-center space-x-2 p-2 md:justify-start   ">
+          <Bell />
+          <h3 className="hidden md:block">Notifications</h3>
+        </div>
+        <div className="flex  justify-center space-x-2 p-2 md:justify-start   ">
+          <Mail />
+          <h3 className="hidden md:block">Message</h3>
+        </div>
+        <div className="flex  justify-center space-x-2 p-2 md:justify-start   ">
+          <Bookmark />
+          <h3 className="hidden md:block">Bookmark</h3>
+        </div>
+        <div className=" flex  justify-center space-x-2 p-2 md:justify-start  ">
+          <User />
+          <h3 className="hidden md:block">Profile</h3>
+        </div>
+        <div className="hidden  justify-center space-x-2 p-2 sm:flex md:justify-start">
+          <PostButton />
+        </div>
       </div>
-      <div className="flex  justify-center rounded-lg p-2  hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <HomeIcon />
-        <h3 className="hidden text-xl font-bold md:block">Home</h3>
-      </div>
-      <div className="flex   justify-center rounded-lg p-2 hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <Search />
-        <h3 className="hidden text-xl font-bold md:block">Search</h3>
-      </div>
-      <div className="flex   justify-center rounded-lg p-2 hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <Bell />
-        <h3 className="hidden text-xl font-bold md:block">Notifications</h3>
-      </div>
-      <div className="flex   justify-center rounded-lg p-2 hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <Mail />
-        <h3 className="hidden text-xl font-bold md:block">Message</h3>
-      </div>
-      <div className="flex   justify-center rounded-lg p-2 hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <Bookmark />
-        <h3 className="hidden text-xl font-bold md:block">Bookmark</h3>
-      </div>
-      <div className="flex   justify-center rounded-lg p-2 hover:bg-[#27272A] sm:py-3 sm:pl-2 md:justify-start md:space-x-4">
-        <User />
-        <h3 className="hidden text-xl font-bold md:block">Profile</h3>
-      </div>
+
       <div className="hidden sm:block">
-        <PostButton />
+        <div className="flex items-center justify-between space-x-4">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>OM</AvatarFallback>
+          </Avatar>
+          <div className="hidden items-center space-x-1 md:flex">
+            <div>
+              <p className="text-sm font-medium leading-none">Sofia Davis</p>
+              <p className="text-sm text-muted-foreground">m@example.com</p>
+            </div>
+            <Settings2 />
+          </div>
+        </div>
       </div>
     </div>
   );
