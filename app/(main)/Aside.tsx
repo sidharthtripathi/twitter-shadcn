@@ -17,8 +17,19 @@ import {
 } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import { ModeToggle } from "@/components/providers/themeProvider";
+import { db } from "@/lib/db";
+
 interface AsideType extends React.HTMLAttributes<HTMLDivElement> {}
-function Aside({ className, ...props }: AsideType) {
+async function Aside({ className, ...props }: AsideType) {
+  const users = await db.user.findMany({
+    where: {
+      name: { not: "hulu" },
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+    take: 3,
+  });
   return (
     <div className={cn(className, "space-y-3 ")}>
       <div className="flex">
@@ -49,16 +60,25 @@ function Aside({ className, ...props }: AsideType) {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
+          {users.map((user) => (
+            <UserProfile
+              name={user.name}
+              email={user.email}
+              image={user.image}
+            />
+          ))}
         </CardContent>
       </Card>
     </div>
   );
 }
 
-function UserProfile() {
+interface UserType {
+  name: string;
+  email: string;
+  image: string;
+}
+function UserProfile(user: UserType) {
   return (
     <HoverCard>
       <div className="flex justify-between">
@@ -66,12 +86,12 @@ function UserProfile() {
           <div className="flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-4">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user.image} />
                 <AvatarFallback>OM</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium leading-none">Sofia Davis</p>
-                <p className="text-sm text-muted-foreground">m@example.com</p>
+                <p className="text-sm font-medium leading-none">{user.name}</p>
+                <p className="text-sm text-muted-foreground">{user.email}</p>
               </div>
             </div>
           </div>
@@ -88,20 +108,20 @@ function UserProfile() {
         <div>
           <div className="flex items-center justify-between">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage src={user.image} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Button>Follow</Button>
           </div>
 
           <div className="mt-4">
-            <div className="text-md font-medium leading-none">Name</div>
-            <p className="text-sm text-muted-foreground">@username</p>
+            <div className="text-md font-medium leading-none">{user.name}</div>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
           <div>
             <blockquote className="mt-6 border-l-2 pl-6 italic">
-              "After all," he said, "everyone enjoys a good joke, so it's only
-              fair that they should pay for the privilege."
+              After all,he said, everyone enjoys a good joke, so it is only fair
+              that they should pay for the privilege.
             </blockquote>
           </div>
           <div className="mt-3 flex justify-between">
