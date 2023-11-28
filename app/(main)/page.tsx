@@ -6,7 +6,7 @@ import PostTweet from "@/components/PostTweet";
 
 export default function Home() {
   return (
-    <div className="grow overflow-y-scroll p-2 scrollbar-hide">
+    <div className=" grow overflow-y-scroll p-2 scrollbar-hide">
       {/* creating tweete */}
 
       <CreateTweet />

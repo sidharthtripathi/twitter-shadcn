@@ -27,6 +27,7 @@ export function Logout() {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
+            className="bg-red-500 text-white hover:bg-red-400"
             onClick={() => {
               signOut();
             }}

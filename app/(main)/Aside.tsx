@@ -32,7 +32,7 @@ async function Aside({ className, ...props }: AsideType) {
   });
   return (
     <div className={cn(className, "space-y-3 ")}>
-      <div className="flex">
+      <div className="flex space-x-2">
         <Input placeholder="search..." />
         <ModeToggle />
       </div>
@@ -62,6 +62,7 @@ async function Aside({ className, ...props }: AsideType) {
         <CardContent className="space-y-6">
           {users.map((user) => (
             <UserProfile
+              key={user.id}
               about={user.about}
               name={user.name}
               email={user.email}

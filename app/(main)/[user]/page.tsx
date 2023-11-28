@@ -4,18 +4,30 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
+import Tweet from "@/components/Tweet";
 
 interface Props {
   params: { user: string };
 }
 async function page({ params: { user } }: Props) {
-  console.log(user);
   const dbuser = await db.user.findUnique({
     where: {
       username: user,
     },
   });
   if (!dbuser) return notFound();
+  const tweets = await db.tweet.findMany({
+    where: {
+      authorId: dbuser.id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      title: true,
+    },
+  });
   return (
     <div className="grow overflow-y-scroll p-2 scrollbar-hide">
       {/* Profile banner */}
@@ -55,6 +67,19 @@ async function page({ params: { user } }: Props) {
             <span className="text-sm font-light text-gray-300">followings</span>
           </div>
         </div>
+      </div>
+
+      {/* Timeline section */}
+      <div className="mt-4 divide-y-2">
+        {tweets.map((tweet) => (
+          <Tweet
+            image={dbuser.image}
+            name={dbuser.name}
+            username={dbuser.username}
+            tweet={tweet.title}
+            key={tweet.id}
+          />
+        ))}
       </div>
     </div>
   );
