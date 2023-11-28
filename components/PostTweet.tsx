@@ -31,7 +31,9 @@ function PostTweet() {
           setVal(e.target.value);
         }}
       />
-      <Button onClick={handleSubmit}>POST</Button>
+      <Button disabled={!val} onClick={handleSubmit}>
+        POST
+      </Button>
     </div>
   );
 }

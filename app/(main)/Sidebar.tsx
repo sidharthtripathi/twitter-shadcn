@@ -23,16 +23,18 @@ import { CreateTweet } from "./page";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { Logout } from "@/components/Logout";
+import Link from "next/link";
 interface SidebarType extends React.HTMLAttributes<HTMLDivElement> {}
 
-function Sidebar({ className, style, ...props }: SidebarType) {
+async function Sidebar({ className, style, ...props }: SidebarType) {
+  const session = await getServerSession(authOptions);
   return (
     <div className={cn(className)}>
       <div className="flex w-full justify-around sm:block sm:space-y-3 ">
         <div className="hidden  justify-center space-x-2 p-2 sm:flex md:justify-start">
           <CatIcon size={32} />
         </div>
-        <MenuItem title="Home">
+        <MenuItem title="Home" href="/">
           <HomeIcon />
         </MenuItem>
         <MenuItem title="Search">
@@ -47,7 +49,7 @@ function Sidebar({ className, style, ...props }: SidebarType) {
         <MenuItem title="Bookmark">
           <Bookmark />
         </MenuItem>
-        <MenuItem title="Profile">
+        <MenuItem title="Profile" href={`/${session?.user.username}`}>
           <User />
         </MenuItem>
         <div className="hidden  justify-center space-x-2 p-2 sm:flex md:justify-start">
@@ -61,10 +63,12 @@ function Sidebar({ className, style, ...props }: SidebarType) {
 }
 interface MenuItemType extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
+  href?: string;
 }
-function MenuItem({ className, title, ...props }: MenuItemType) {
+function MenuItem({ className, title, href, ...props }: MenuItemType) {
   return (
-    <div
+    <Link
+      href={href || "#"}
       className={cn(
         "flex  justify-center space-x-2 p-2 md:justify-start",
         className,
@@ -72,7 +76,7 @@ function MenuItem({ className, title, ...props }: MenuItemType) {
     >
       {props.children}
       <h3 className={cn("hidden md:block", className)}>{title}</h3>
-    </div>
+    </Link>
   );
 }
 

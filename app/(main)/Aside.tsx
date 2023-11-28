@@ -62,6 +62,7 @@ async function Aside({ className, ...props }: AsideType) {
         <CardContent className="space-y-6">
           {users.map((user) => (
             <UserProfile
+              about={user.about}
               name={user.name}
               email={user.email}
               image={user.image}
@@ -77,6 +78,7 @@ interface UserType {
   name: string;
   email: string;
   image: string;
+  about: string;
 }
 function UserProfile(user: UserType) {
   return (
@@ -120,8 +122,7 @@ function UserProfile(user: UserType) {
           </div>
           <div>
             <blockquote className="mt-6 border-l-2 pl-6 italic">
-              After all,he said, everyone enjoys a good joke, so it is only fair
-              that they should pay for the privilege.
+              {user.about}
             </blockquote>
           </div>
           <div className="mt-3 flex justify-between">

@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "./db";
+import { trimHost } from "./utils";
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -26,16 +27,19 @@ export const authOptions: NextAuthOptions = {
               email: u.email,
               name: u.name,
               image: u.image,
+              username: trimHost(u.email),
             },
           });
           return {
             ...token,
             id: newUser.id,
+            username: newUser.username,
           };
         } else {
           return {
             ...token,
             id: user.id,
+            username: user.username,
           };
         }
       } else {
@@ -49,6 +53,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
+          username: token.username,
         },
       };
     },
